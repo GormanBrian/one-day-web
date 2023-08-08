@@ -1,7 +1,9 @@
 import { isRouteErrorResponse, useRouteError } from "react-router-dom";
 
+import "./ErrorPage.css";
+
 const ErrorPage = () => {
-  const error = useRouteError();
+  const error: unknown = useRouteError();
 
   if (isRouteErrorResponse(error)) {
     if (error.status === 401) {
@@ -14,9 +16,9 @@ const ErrorPage = () => {
       <div id="error-page">
         <h1>Oops! {error.status}</h1>
         <p>{error.statusText}</p>
-        {error.data?.message && (
+        {isRouteErrorResponse(error) && (
           <p>
-            <i>{error.data.message}</i>
+            <i>{error.error?.message || error.statusText}</i>
           </p>
         )}
       </div>
